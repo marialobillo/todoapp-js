@@ -50,12 +50,17 @@ function showTodos(){
     }
 }
 
-function deleteTodo(){
-
+function deleteTodo(id){
+    for(let i = 0; i < todos.length; i++){
+        if(todos[i].id == id){
+            todos.splice(i, 1);
+        }
+    }
+    showTodos();
 }
 
 function toggleTodo(){
-
+    
 }
 
 showTodos();
