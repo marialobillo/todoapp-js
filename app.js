@@ -31,6 +31,7 @@ function showTodos(){
 
     for(let i = 0; i < todos.length; i++){
         console.log(todos[i].title, todos[i].complete);
+        let title = todos[i].title;
         todoList.innerHTML += `
             <div class="">
                 <div class="">
@@ -39,7 +40,7 @@ function showTodos(){
                         onclick="toggleTodo(${todos[i].id})"
                         id="${todos[i].id}">
 
-                        ${todos[i].title}
+                        ${todos[i].complete ? title.strike() : title}
                        
                     </p>
                   
@@ -59,8 +60,13 @@ function deleteTodo(id){
     showTodos();
 }
 
-function toggleTodo(){
-    
+function toggleTodo(id){
+    for(let i = 0; i < todos.length; i++){
+        if(todos[i].id == id){
+            todos[i].complete = !todos[i].complete;
+        }
+    }
+    showTodos();
 }
 
 showTodos();
