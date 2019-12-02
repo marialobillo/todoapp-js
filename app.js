@@ -30,6 +30,32 @@ function showTodos(){
     todoList.innerHTML = '';
 
     for(let i = 0; i < todos.length; i++){
-        console.log(todos[i].title);
+        console.log(todos[i].title, todos[i].complete);
+        todoList.innerHTML += `
+            <div class="">
+                <div class="">
+                    
+                    <p class="" 
+                        onclick="toggleTodo(${todos[i].id})"
+                        id="${todos[i].id}">
+
+                        ${todos[i].title}
+                       
+                    </p>
+                  
+                    <a class="" onclick="deleteTodo(${todos[i].id})">X</a>
+                </div>
+            </div>
+        `;
     }
 }
+
+function deleteTodo(){
+
+}
+
+function toggleTodo(){
+
+}
+
+showTodos();
