@@ -1,14 +1,14 @@
 document.getElementById('todoForm').addEventListener('submit', saveTodo);
 
-// initial array of todos
-const todos = [];
+// initial array of todos, reading from localStorage
+const todos = JSON.parse(localStorage.getItem('todos')) || [];
 
 function saveTodo(e){
     e.preventDefault();
 
     let title = document.getElementById('title').value;
     
-    // validation
+    // simple validation
     if(title.length > 0){
         const todo = {
             title, 
@@ -17,6 +17,8 @@ function saveTodo(e){
         }
 
         todos.push(todo);
+        // localStorage
+        localStorage.setItem('todos', JSON.stringify(todos));
     }
 
     document.getElementById('todoForm').reset();
@@ -57,6 +59,8 @@ function deleteTodo(id){
             todos.splice(i, 1);
         }
     }
+    // localStorage
+    localStorage.setItem('todos', JSON.stringify(todos));
     showTodos();
 }
 
