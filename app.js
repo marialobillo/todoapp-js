@@ -35,7 +35,7 @@
         todoList.innerHTML = '';
 
         for(let i = 0; i < todos.length; i++){
-            //console.log(todos[i].title, todos[i].complete);
+           
             let title = todos[i].title;
 
             const todoDivEl = document.createElement('DIV');
@@ -48,19 +48,22 @@
             todoTitleEl.onclick = function(e){
                 toggleTodo(todos[i].id);
 
-                 // localStorage
+                // localStorage
                 localStorage.setItem('todos', JSON.stringify(todos));
                 showTodos();
             };
 
-            todoTitleEl.textContent = todos[i].complete ? title.strike() : title;
+            todos[i].complete ? todoTitleEl.style.textDecoration = 'line-through' : todoTitleEl.style.textDecoration = '';
+            todoTitleEl.textContent = title;
             todoDivEl.appendChild(todoTitleEl);
 
             const deleteAnchorEl = document.createElement('A');
             deleteAnchorEl.className = 'todoDelete';
             deleteAnchorEl.onclick = function(e){
                 deleteTodo(todos[i].id);
-
+                
+                // localStorage
+                localStorage.setItem('todos', JSON.stringify(todos));
                 showTodos();
             };
 
@@ -83,7 +86,6 @@
                 todos[i].complete = !todos[i].complete;
             }
         }
-        showTodos();
     }
 
     showTodos();
