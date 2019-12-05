@@ -6,11 +6,7 @@ View live on CodePen <a href="https://codepen.io/marialobillo/pen/eYmYVgw" targe
 
 <br>
 
-<p><img src="javascript.svg" width="40"></p>
-
-<br>
-
-<img src="demo.jpg" width="500">
+<img src="demo.png" width="500">
 
 ## Summary
 
