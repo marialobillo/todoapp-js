@@ -1,73 +1,91 @@
-document.getElementById('todoForm').addEventListener('submit', saveTodo);
 
-// initial array of todos, reading from localStorage
-const todos = JSON.parse(localStorage.getItem('todos')) || [];
+(function(){
+    // initial array of todos, reading from localStorage
+    const todos = JSON.parse(localStorage.getItem('todos')) || [];
 
-function saveTodo(e){
-    e.preventDefault();
+    document.getElementById('todoForm').addEventListener('submit', function(e){
+        e.preventDefault();
 
-    let title = document.getElementById('title').value;
-    
-    // simple validation
-    if(title.length > 0){
+        let textInput = document.getElementById('text-Input').value;
+        
+        // simple validation
+        if(textInput.length <= 0){ return;}
+
         const todo = {
-            title, 
+            title: textInput, 
             complete: false, 
             id: todos.length > 0 ? todos[todos.length -1].id + 1 : 1,
         }
 
         todos.push(todo);
+
         // localStorage
         localStorage.setItem('todos', JSON.stringify(todos));
-    }
+        
 
-    document.getElementById('todoForm').reset();
-    showTodos();
-}
+        document.getElementById('todoForm').reset();
+        showTodos();
+    });
 
-function showTodos(){
 
-    const todoList = document.getElementById('todoList');
+    function showTodos(){
 
-    todoList.innerHTML = '';
+        const todoList = document.getElementById('todoList');
 
-    for(let i = 0; i < todos.length; i++){
-        //console.log(todos[i].title, todos[i].complete);
-        let title = todos[i].title;
-        todoList.innerHTML += `
-            <div class="todo">
-                    <p class="todoTitle" 
-                        onclick="toggleTodo(${todos[i].id})"
-                        id="${todos[i].id}">
+        todoList.innerHTML = '';
 
-                        ${todos[i].complete ? title.strike() : title}
-                       
-                    </p>
-                  
-                    <a class="todoDelete" onclick="deleteTodo(${todos[i].id})">x</a>
-            </div>
-        `;
-    }
-}
+        for(let i = 0; i < todos.length; i++){
+            //console.log(todos[i].title, todos[i].complete);
+            let title = todos[i].title;
 
-function deleteTodo(id){
-    for(let i = 0; i < todos.length; i++){
-        if(todos[i].id == id){
-            todos.splice(i, 1);
+            const todoDivEl = document.createElement('DIV');
+            todoDivEl.className = 'todo';
+            todoList.appendChild(todoDivEl);
+
+            const todoTitleEl = document.createElement('P');
+            todoTitleEl.className = 'todoTitle';
+            todoTitleEl.setAttribute('id', todos[i].id);
+            todoTitleEl.onclick = function(e){
+                toggleTodo(todos[i].id);
+
+                 // localStorage
+                localStorage.setItem('todos', JSON.stringify(todos));
+                showTodos();
+            };
+
+            todoTitleEl.textContent = todos[i].complete ? title.strike() : title;
+            todoDivEl.appendChild(todoTitleEl);
+
+            const deleteAnchorEl = document.createElement('A');
+            deleteAnchorEl.className = 'todoDelete';
+            deleteAnchorEl.onclick = function(e){
+                deleteTodo(todos[i].id);
+
+                showTodos();
+            };
+
+            deleteAnchorEl.textContent = 'X';
+            todoDivEl.appendChild(deleteAnchorEl);
         }
     }
-    // localStorage
-    localStorage.setItem('todos', JSON.stringify(todos));
-    showTodos();
-}
 
-function toggleTodo(id){
-    for(let i = 0; i < todos.length; i++){
-        if(todos[i].id == id){
-            todos[i].complete = !todos[i].complete;
+    function deleteTodo(id){
+        for(let i = 0; i < todos.length; i++){
+            if(todos[i].id == id){
+                todos.splice(i, 1);
+            }
         }
     }
-    showTodos();
-}
 
-showTodos();
+    function toggleTodo(id){
+        for(let i = 0; i < todos.length; i++){
+            if(todos[i].id == id){
+                todos[i].complete = !todos[i].complete;
+            }
+        }
+        showTodos();
+    }
+
+    showTodos();
+
+})();

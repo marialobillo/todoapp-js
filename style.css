@@ -29,6 +29,7 @@ body{
 
 .todoTitle{
     display:inline;
+    cursor: pointer;
    
   
 }
@@ -41,6 +42,7 @@ body{
     border: solid #fff 1px;
     color: #fff;
     float: right;
+    cursor: pointer;
 }
 
 .buttonSave{
